@@ -30,10 +30,7 @@ export const HeaderNavigation = ({ isMobile }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { Categories } = useStore();
 
-  const navItems = [
-    { href: "/sale", label: "Sale" },
-    { href: "/collections", label: "Collections" },
-  ];
+  const navItems = [{ href: "/sale", label: "Sale" }];
 
   const renderCategories = (
     category: CategoryWithBillboardAndUser,

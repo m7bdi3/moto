@@ -1,4 +1,3 @@
-"use client";
 import React, { Suspense } from "react";
 import { getAllusers } from "@/actions/adminActions";
 import { ContentLayout } from "@/components/admin/content-layout";

@@ -10,7 +10,6 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
 import Image from "next/image";
-import { number } from "zod";
 
 interface OrderItem {
   id: string;
@@ -59,7 +58,7 @@ export default function AccountOrders({ orders }: Props) {
           </ScrollArea>
         ) : (
           <p className="text-center text-muted-foreground">
-            You haven't made any orders yet.
+            You haven&apos;t made any orders yet.
           </p>
         )}
       </CardContent>
