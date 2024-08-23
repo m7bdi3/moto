@@ -1,96 +1,154 @@
-import { ShoppingBagIcon } from "lucide-react";
-import Link from "next/link";
-import React from "react";
+"use client";
 
+import Image from "next/image";
+import { Logo } from "../logo";
+import { TransitionLink } from "../LinkTransition";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { useStore } from "@/hooks/store/use-store";
+import { Facebook, Instagram, Twitter } from "lucide-react";
+import { Separator } from "../ui/separator";
+import { motion } from "framer-motion";
 const LinkFooter = ({ href, text }: { href: string; text: string }) => {
   return (
-    <Link href={href} className=" hover:underline" prefetch={false}>
+    <TransitionLink
+      href={href}
+      className="hover:underline transition-colors duration-200 text-white/70 hover:text-primary-foreground"
+      prefetch={false}
+    >
       {text}
-    </Link>
+    </TransitionLink>
   );
 };
 
 export const Footer = () => {
-  return (
-    <footer className="flex flex-col gap-2  py-6 w-full shrink-0  items-center px-4 md:px-6 border-t bg-muted">
-      <div className="w-full flex items-center gap-2">
-        <ShoppingBagIcon className="h-8 w-8" />
-        <p className="text-xl font-bold tracking-tighter md:text-2xl">
-          Acme Store
-        </p>
-      </div>
-      <div className=" p-4 md:py-12 w-full">
-        <div className="container w-full grid grid-cols-2 md:grid-cols-3  gap-8 text-sm">
-          <div className="grid gap-1">
-            <h3 className="font-semibold text-base md:text-lg">Company</h3>
-            <div className="grid ml-4">
-              <LinkFooter href="about" text="About us" />
-              <LinkFooter href="careers" text="Careers" />
-              <LinkFooter href="news" text="News" />
-              <LinkFooter href="newsletter" text="Newsletter" />
-            </div>
-          </div>
-          <div className="grid gap-1">
-            <h3 className="font-semibold text-base md:text-lg">Products</h3>
-            <div className="grid ml-4">
-              <LinkFooter href="apparel" text="Apparel" />
-              <LinkFooter href="home-decor" text="Home Decor" />
-              <LinkFooter href="gifts" text="Gifts" />
-              <LinkFooter href="products" text="All Products" />
-            </div>
-          </div>
-          <div className="grid gap-1">
-            <h3 className="font-semibold text-base md:text-lg">Resources</h3>
-            <div className="grid ml-4">
-              <LinkFooter href="blog" text="Blog" />
-              <LinkFooter href="faqs" text="FAQs" />
-              <LinkFooter href="shipping-returns" text="Shipping & Returns" />
+  const { Categories } = useStore();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
-              <LinkFooter href="partnerships" text="Partnerships" />
+  return (
+    <footer className={cn("w-full", isHome && "bg-muted")}>
+      <div className="bg-primary md:rounded-tr-full relative">
+        <Image
+          src={"/cloths-sipping-van.svg"}
+          alt="van"
+          width={120}
+          height={40}
+          className="absolute md:top-[45px] lg:top-[70px] right-40 rotate-[35deg] hidden md:block"
+        />
+        <div className="container mx-auto px-4 py-12 lg:py-16">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 lg:gap-8">
+            <div className="md:col-span-4 mb-8">
+              <Logo spanClassName="text-primary-foreground" isfooter />
+              <p className="mt-4 text-sm text-white/70  max-w-md">
+                Moto Shop is your one-stop destination for high-quality Apparel
+                and shoes. Go with confidence and style.
+              </p>
             </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-4 text-primary-foreground ">
+                Company
+              </h3>
+              <ul className="space-y-2">
+                <li>
+                  <LinkFooter href="/about" text="About us" />
+                </li>
+                <li>
+                  <LinkFooter href="/careers" text="Careers" />
+                </li>
+                <li>
+                  <LinkFooter href="/news" text="News" />
+                </li>
+                <li>
+                  <LinkFooter href="/newsletter" text="Newsletter" />
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-4 text-primary-foreground ">
+                Products
+              </h3>
+              <ul className="space-y-2">
+                {Categories?.filter((category) => category.parentId === null)
+                  .map((category) => (
+                    <li key={category.id}>
+                      <LinkFooter
+                        href={`/shop/${category.id}`}
+                        text={category.name}
+                      />
+                    </li>
+                  ))
+                  .slice(0, 4)}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold text-lg mb-4 text-primary-foreground ">
+                Resources
+              </h3>
+              <ul className="space-y-2">
+                <li>
+                  <LinkFooter href="/blog" text="Blog" />
+                </li>
+                <li>
+                  <LinkFooter href="/faqs" text="FAQs" />
+                </li>
+                <li>
+                  <LinkFooter
+                    href="/shipping-returns"
+                    text="Shipping & Returns"
+                  />
+                </li>
+                <li>
+                  <LinkFooter href="/partnerships" text="Partnerships" />
+                </li>
+              </ul>
+            </div>
+            <div className="md:w-20 ">
+              <h3 className="font-semibold text-lg mb-4 text-primary-foreground ">
+                Connect
+              </h3>
+              <div className="flex md:flex-col md:space-y-4 space-x-4 md:space-x-0 items-center">
+                <a
+                  href="#"
+                  aria-label="Facebook"
+                  className="text-white/70 hover:text-primary-foreground transition-colors duration-200"
+                >
+                  <Facebook size={24} />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Instagram"
+                  className="text-white/70 hover:text-primary-foreground transition-colors duration-200"
+                >
+                  <Instagram size={24} />
+                </a>
+                <a
+                  href="#"
+                  aria-label="Twitter"
+                  className="text-white/70 hover:text-primary-foreground transition-colors duration-200"
+                >
+                  <Twitter size={24} />
+                </a>
+              </div>
+            </div>
+          </div>
+          <Separator className=" max-w-[80%] mt-8 mx-auto" />
+          <div className="pt-8">
+            <nav className="flex flex-wrap justify-center gap-4 mb-4">
+              <LinkFooter href="/terms" text="Terms of Service" />
+              <LinkFooter href="/policy" text="Privacy Policy" />
+              <LinkFooter href="/contact" text="Contact Us" />
+              <LinkFooter href="/cookies" text="Cookies Policy" />
+            </nav>
+            <p className="text-xs text-center text-primary-foreground/60">
+              &copy; {new Date().getFullYear()} Moto Shop. All rights reserved.
+            </p>
           </div>
         </div>
       </div>
-      <nav className="sm:mx-auto flex gap-4 sm:gap-6">
-        <Link
-          href="/terms"
-          className="text-xs hover:underline underline-offset-4"
-          prefetch={false}
-        >
-          Terms of Service
-        </Link>
-        <Link
-          href="/policy"
-          className="text-xs hover:underline underline-offset-4"
-          prefetch={false}
-        >
-          Privacy Policy
-        </Link>
-        <Link
-          href="/contact"
-          className="text-xs hover:underline underline-offset-4"
-          prefetch={false}
-        >
-          Contact Us
-        </Link>
-        <Link
-          href="/followUs"
-          className="text-xs hover:underline underline-offset-4"
-          prefetch={false}
-        >
-          Follow Us
-        </Link>
-        <Link
-          href="/cookies"
-          className="text-xs hover:underline underline-offset-4"
-          prefetch={false}
-        >
-          Cookies Policy
-        </Link>
-      </nav>
-      <p className="text-xs text-muted-foreground">
-        &copy; 2024 Acme Shop. All rights reserved.
-      </p>
+      <motion.div className=" py-2 px-4  text-center text-sm">
+        Free shipping on orders over $100 | Easy returns
+      </motion.div>
     </footer>
   );
 };

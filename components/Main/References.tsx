@@ -3,11 +3,11 @@ import React from "react";
 
 export const References = () => {
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32">
-      <div className="container flex flex-col items-center gap-6 px-4 md:px-6 md:flex-row lg:gap-10 w-full">
-        <div className="space-y-2 flex-1 text-center md:text-start">
+    <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+      <div className="container flex flex-col items-center justify-center gap-6 px-4 md:px-6 md:flex-row lg:gap-10 w-full h-[50dvh]">
+        <div className="space-y-2  text-center md:text-start">
           <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-            Why Choose Acme Shop?
+            Why Choose Moto Shop?
           </h2>
           <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
             Discover the benefits of shopping with us, from free shipping to our

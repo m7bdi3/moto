@@ -1,101 +1,102 @@
-import Image from "next/image";
-import React from "react";
+"use client";
 
-const products = [
-  {
-    id: 1,
-    name: "Acme Prism T-Shirt",
-    description: "Comfortable and stylish cotton blend tee",
-    price: 29.99,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 2,
-    name: "Acme Hiking Backpack",
-    description: "Durable and spacious backpack for your adventures",
-    price: 59.99,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 3,
-    name: "Acme Wireless Headphones",
-    description: "High-quality sound with a comfortable fit",
-    price: 99.99,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 4,
-    name: "Acme Outdoor Camping Gear",
-    description: "Everything you need for your next camping trip",
-    price: 149.99,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 5,
-    name: "Acme Smart Home Devices",
-    description: "Automate and control your home with ease",
-    price: 79.99,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 6,
-    name: "Acme Fitness Tracker",
-    description: "Monitor your activity and health with precision",
-    price: 49.99,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 7,
-    name: "Acme Outdoor Apparel",
-    description: "Stylish and functional clothing for the outdoors",
-    price: 39.99,
-    image: "/placeholder.svg",
-  },
-  {
-    id: 8,
-    name: "Acme Kitchen Appliances",
-    description: "High-performance appliances for your kitchen",
-    price: 199.99,
-    image: "/placeholder.svg",
-  },
-];
+import React, { useState, useEffect } from "react";
+import ProductCard from "../ProductCard";
+import { useStore } from "@/hooks/store/use-store";
+import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import { ProductsWithCategoryAndUser } from "@/types";
 
 export const ProductsSections = () => {
+  const { products, Categories } = useStore();
+  const [featuredProducts, setFeaturedProducts] = useState<
+    ProductsWithCategoryAndUser[]
+  >([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+
+  useEffect(() => {
+    if (products) {
+      const featured = products
+        .filter((product) => product.isFeatured)
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 8);
+      setFeaturedProducts(featured);
+    }
+  }, [products]);
+
+  const filteredProducts =
+    selectedCategory === "all"
+      ? featuredProducts
+      : featuredProducts.filter(
+          (product) => product.category.parentId === selectedCategory
+        );
+
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-              Featured Products
-            </h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Discover our curated selection of the best products for your
-              needs.
-            </p>
-          </div>
-        </div>
-        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {products.slice(0, 8).map((product) => (
-            <div
-              key={product.id}
-              className="group flex flex-col rounded-md border bg-background p-4 shadow-sm transition-all hover:bg-accent hover:text-accent-foreground"
-            >
-              <Image
-                src="/placeholder.svg"
-                width="300"
-                height="300"
-                alt={product.name}
-                className="mx-auto aspect-square overflow-hidden rounded-md object-cover"
+    <section className="w-full bg-muted py-16 md:py-24">
+      <div className="container px-4 md:px-6 ">
+        <motion.div
+          className="flex flex-col items-center justify-center space-y-4 text-center "
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+            Featured Products
+          </h2>
+          <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed">
+            Discover our curated selection of the best products for your needs.
+          </p>
+        </motion.div>
+
+        <Tabs defaultValue="all" className="mt-12 ">
+          <TabsList className="flex justify-center flex-wrap">
+            <TabsTrigger value="all">All</TabsTrigger>
+            {Categories?.filter((category) => category.parentId === null).map(
+              (category) => (
+                <TabsTrigger key={category.id} value={category.id}>
+                  {category.name}
+                </TabsTrigger>
+              )
+            )}
+          </TabsList>
+          <TabsContent value="all" className="mt-6">
+            <ProductGrid products={filteredProducts} />
+          </TabsContent>
+          {Categories?.map((category) => (
+            <TabsContent key={category.id} value={category.id} className="mt-6">
+              <ProductGrid
+                products={filteredProducts.filter(
+                  (p) => p.category.parentId === category.id
+                )}
               />
-              <div className="mt-4 flex flex-col items-start justify-between space-y-2">
-                <h3 className="text-lg font-medium">{product.name}</h3>
-                <p className="text-muted-foreground">${product.price}</p>
-              </div>
-            </div>
+            </TabsContent>
           ))}
-        </div>
+        </Tabs>
       </div>
     </section>
   );
 };
+
+const ProductGrid = ({
+  products,
+}: {
+  products: ProductsWithCategoryAndUser[];
+}) => (
+  <motion.div
+    className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4 place-items-center md:place-items-stretch"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 0.5 }}
+  >
+    {products.map((product) => (
+      <motion.div
+        key={product.id}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <ProductCard product={product} />
+      </motion.div>
+    ))}
+  </motion.div>
+);

@@ -6,11 +6,11 @@ export default function Page() {
     <div className="flex min-h-[100dvh] flex-col items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-md text-center">
         <Image
-          src="/main/hero2.jpeg"
+          src="/moto.svg"
           alt="Lost explorer"
           width={600}
           height={600}
-          className="mx-auto mb-6 rounded-full"
+          className="mx-auto mb-6 rounded-full dark:invert"
         />
         <h1 className="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           Oops, looks like you&apos;re lost!
