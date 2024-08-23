@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 
 import { Modal } from "../modal";
 import { Button } from "../ui/button";
-import { ChromeIcon, GithubIcon } from "lucide-react";
+import { ChromeIcon } from "lucide-react";
 import { useModalStore } from "@/hooks/store/use-store-modal";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 
@@ -29,19 +29,11 @@ export const LoginModal = () => {
         <CardContent className="space-x-4 flex  items-center justify-center w-full">
           <Button
             variant="outline"
-            className="justify-center gap-3 w-full"
+            className="justify-center gap-3 "
             onClick={() => signIn("google", { redirectTo: "/" })}
           >
             <ChromeIcon className="h-6 w-6" />
             Sign in with Google
-          </Button>
-          <Button
-            variant="outline"
-            className="justify-center gap-3 w-full"
-            onClick={() => signIn("github", { redirectTo: "/" })}
-          >
-            <GithubIcon className="h-6 w-6" />
-            Sign in with GitHub
           </Button>
         </CardContent>
         <CardFooter className="text-center text-sm text-neutral-500">
