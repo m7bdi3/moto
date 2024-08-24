@@ -2,8 +2,9 @@
 
 Moto is a comprehensive e-commerce platform for apparel and shoes, equipped with a Content Management System (CMS) dashboard. The platform allows for efficient management of sales, products, and categories. The project is built using Next.js, Tailwind CSS, and ShadCN UI for the frontend, providing a modern and responsive user interface.
 
-<img src="https://utfs.io/f/092d2503-4050-4e3b-b163-7a8d4b3f25d7-pfgf2p.png" alt="Sample Image" width="100%" height= "500"/>
+<img src="https://utfs.io/f/092d2503-4050-4e3b-b163-7a8d4b3f25d7-pfgf2p.png" alt="Sample Image" width="100%" style="border-radius: 20%" height= "500"/>
 
+<img src="https://utfs.io/f/1b711efc-324a-4728-8b92-3a3735d52a54-pfftlc.png" alt="Sample Image" width="100%" style="border-radius: 20%; margin-top: 10px;" height= "500" />
 
 
 ## Table of Contents
