@@ -15,6 +15,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ModalProvider } from "@/providers/modal-provider";
 import { SessionProvider } from "next-auth/react";
 import db from "@/lib/db";
+import { LenisScroll } from "@/hooks/Lenis-Scroll";
 //////////////////////////////////////////////////////////////////
 
 export const metadata: Metadata = {
@@ -66,6 +67,7 @@ export default async function RootLayout({
           <SessionProvider>
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             <TooltipProvider>{children}</TooltipProvider>
+            <LenisScroll/>
             <ModalProvider />
             <Toaster />
             <InitUser user={user || undefined} />

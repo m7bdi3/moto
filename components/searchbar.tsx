@@ -26,9 +26,9 @@ export const Searchbar = () => {
         }}
         size={"icon"}
         variant={"outline"}
-        className="border-none"
+        className="border-none h-8 w-8 bg-transparent rounded-full"
       >
-        <SearchIcon size={20} />
+        <SearchIcon className="w-[1.2rem] h-[1.2rem]" />
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
         <CommandInput placeholder="Search..." />
