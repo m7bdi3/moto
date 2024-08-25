@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { Logo } from "../logo";
 import { TransitionLink } from "../LinkTransition";
@@ -8,13 +7,57 @@ import { cn } from "@/lib/utils";
 import { useStore } from "@/hooks/store/use-store";
 import { Facebook, Instagram, Twitter } from "lucide-react";
 import { Separator } from "../ui/separator";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+  useMotionValue,
+  useVelocity,
+  useAnimationFrame,
+  wrap,
+} from "framer-motion";
+import { useRef } from "react";
+
+interface ParallaxProps {
+  children: React.ReactNode;
+  baseVelocity: number;
+}
+
+function ParallaxWord({ children, baseVelocity = 100 }: ParallaxProps) {
+  const baseX = useMotionValue(0);
+  const smoothVelocity = useSpring(10, {
+    damping: 50,
+    stiffness: 400,
+  });
+  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
+    clamp: false,
+  });
+
+  const x = useTransform(baseX, (v) => `${wrap(0, 100, v)}%`);
+
+  const directionFactor = useRef<number>(1);
+  useAnimationFrame((t, delta) => {
+    let moveBy = directionFactor.current * baseVelocity * (delta / 1000);
+    directionFactor.current = 2;
+
+    moveBy += directionFactor.current * moveBy * velocityFactor.get();
+
+    baseX.set(baseX.get() + moveBy);
+  });
+  return (
+    <div className="overflow-hidden flex-nowrap w-full h-fit py-2 flex">
+      <motion.div className="flex w-full flex-nowrap " style={{ x }}>
+        <span className="flex w-full h-full">{children} </span>
+      </motion.div>
+    </div>
+  );
+}
 const LinkFooter = ({ href, text }: { href: string; text: string }) => {
   return (
     <TransitionLink
       href={href}
       className="hover:underline transition-colors duration-200 text-white/70 hover:text-primary-foreground"
-      prefetch={false}
     >
       {text}
     </TransitionLink>
@@ -146,9 +189,11 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-      <motion.div className=" py-2 px-4  text-center text-sm">
-        Free shipping on orders over $100 | Easy returns
-      </motion.div>
+      <ParallaxWord baseVelocity={12}>
+        <p className="text-xl font-bold tracking-tighter">
+          Free shipping on orders over $100 | Easy returns
+        </p>
+      </ParallaxWord>
     </footer>
   );
 };

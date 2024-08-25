@@ -3,11 +3,11 @@ import ProductCard from "@/components/ProductCard";
 import db from "@/lib/db";
 import { redirect } from "next/navigation";
 import React, { Suspense } from "react";
-import { HeartIcon, Loader } from "lucide-react";
+import { HeartIcon, Loader, Loader2Icon } from "lucide-react";
 
 export const Loading = () => (
   <div className="flex justify-center items-center h-screen">
-    <Loader className="h-8 w-8 animate-spin" />
+    <Loader2Icon className="h-16 w-16 animate-spin" />
   </div>
 );
 

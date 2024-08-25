@@ -57,7 +57,7 @@ export const NavbarActions = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Button
-                  className="rounded-full w-8 h-8 bg-background hover:bg-zinc-200 dark:hover:bg-zinc-700 relative"
+                  className="rounded-full w-8 h-8 bg-transparent relative"
                   variant="outline"
                   size="icon"
                 >
