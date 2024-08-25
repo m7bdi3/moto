@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TransitionLink } from "@/components/LinkTransition";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDownCircleIcon } from "lucide-react";
 
 export const Hero = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -18,6 +18,13 @@ export const Hero = () => {
 
   useEffect(() => {
     setIsMounted(true);
+  }, []);
+
+  const scrollToNextSection = useCallback(() => {
+    const nextSection = ref.current?.nextElementSibling as HTMLElement;
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: "smooth" });
+    }
   }, []);
 
   const containerVariants = {
@@ -72,6 +79,14 @@ export const Hero = () => {
           Your browser does not support the video tag.
         </video>
       )}
+
+      <div className="absolute bottom-8 left-0 right-0 mx-auto w-full flex flex-col items-center justify-center gap-4 z-10">
+        <p className="text-sm text-muted-foreground">Scroll for more</p>
+        <ChevronDownCircleIcon
+          className="h-10 w-10 cursor-pointer text-primary animate-bounce"
+          onClick={scrollToNextSection}
+        />
+      </div>
 
       <div className="absolute inset-0 z-0 bg-gradient-to-r from-background to-transparent via-transparent" />
       <div className="container px-4 md:px-6 z-10">

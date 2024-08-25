@@ -57,7 +57,7 @@ export const NavbarActions = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Button
-                  className="rounded-full w-8 h-8 bg-transparent relative"
+                  className="rounded-full w-8 h-8 bg-transparent relative border-none"
                   variant="outline"
                   size="icon"
                 >

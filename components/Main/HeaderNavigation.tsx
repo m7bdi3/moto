@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ChevronsUpDown, Dot } from "lucide-react";
+import { ArrowRight, ChevronsUpDown } from "lucide-react";
 import { useStore } from "@/hooks/store/use-store";
 import { Button } from "@/components/ui/button";
 import {

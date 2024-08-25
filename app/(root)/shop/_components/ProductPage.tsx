@@ -22,6 +22,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { motion } from "framer-motion";
+import { useCartStore } from "@/hooks/store/use-cart-store";
+import { useSession } from "next-auth/react";
 
 interface Props {
   product: ProductsWithCategoryAndUser;
@@ -29,10 +31,19 @@ interface Props {
 }
 
 export const ProductPage = ({ product, category }: Props) => {
+  const session = useSession();
+  const { addItem } = useCartStore();
+  const { openImageViewer, openLogin } = useModalStore();
+  const handleAddToCart = () => {
+    if (!session || !session.data?.user.id) {
+      openLogin();
+    } else {
+      addItem(product);
+    }
+  };
   const [imagePlace, setImagePlace] = useState(
     product.productImages[0].imageUrl
   );
-  const { openImageViewer } = useModalStore();
 
   const uniqueSizes = Array.from(
     new Set(product.variants.map((variant) => variant.size.value))
@@ -173,10 +184,10 @@ export const ProductPage = ({ product, category }: Props) => {
               </div>
             </TabsContent>
           </Tabs>
-
           <Button
             className="w-full py-6 text-lg font-semibold"
             disabled={product.isArchived}
+            onClick={handleAddToCart}
           >
             <ShoppingBasket className="w-5 h-5 mr-2" />
             {product.isArchived ? "Out of Stock" : "Add to Cart"}

@@ -9,11 +9,9 @@ import { Facebook, Instagram, Twitter } from "lucide-react";
 import { Separator } from "../ui/separator";
 import {
   motion,
-  useScroll,
   useSpring,
   useTransform,
   useMotionValue,
-  useVelocity,
   useAnimationFrame,
   wrap,
 } from "framer-motion";
@@ -189,7 +187,7 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-      <ParallaxWord baseVelocity={12}>
+      <ParallaxWord baseVelocity={6}>
         <p className="text-xl font-bold tracking-tighter">
           Free shipping on orders over $100 | Easy returns
         </p>
