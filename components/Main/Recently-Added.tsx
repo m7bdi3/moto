@@ -12,46 +12,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { TransitionLink } from "@/components/LinkTransition";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useInView,
-  useAnimation,
-} from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
 export default function RecentlyAdded() {
   const { products } = useStore();
-  const ref = useRef<HTMLDivElement>(null);
-  const carouselRef = useRef<HTMLDivElement>(null);
-
-  const controls = useAnimation();
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1]);
-
-  useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [controls, isInView]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -67,34 +31,42 @@ export default function RecentlyAdded() {
   };
 
   return (
-    <motion.section
-      ref={ref}
-      className="bg-gradient-to-r from-background to-secondary/10 py-16 md:py-24 overflow-hidden"
-      style={{ opacity, scale }}
-    >
-      <motion.div
-        className="container mx-auto px-4 "
-        variants={containerVariants}
-        initial="hidden"
-        animate={controls}
-      >
-        <motion.div className="text-center mb-12" variants={itemVariants}>
+    <section className="bg-gradient-to-r from-background to-secondary/10 py-16 md:py-24 overflow-hidden min-h-screen relative">
+      <div className="container mx-auto px-4 ">
+        <motion.div
+          className="text-center mb-12"
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+        >
           <motion.h2
             className="text-3xl font-bold tracking-tight md:text-4xl mb-4"
             variants={itemVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.3 }}
           >
             Recently Added Products
           </motion.h2>
           <motion.p
             className="text-muted-foreground text-lg max-w-2xl mx-auto"
             variants={itemVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.3 }}
           >
             Discover our latest arrivals and stay ahead of the curve with our
             freshest product releases.
           </motion.p>
         </motion.div>
 
-        <motion.div variants={itemVariants} ref={carouselRef}>
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, amount: 0.3 }}
+        >
           <Carousel
             opts={{
               align: "start",
@@ -128,7 +100,7 @@ export default function RecentlyAdded() {
             </TransitionLink>
           </Button>
         </motion.div>
-      </motion.div>
-    </motion.section>
+      </div>
+    </section>
   );
 }

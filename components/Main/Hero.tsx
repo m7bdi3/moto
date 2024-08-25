@@ -81,14 +81,14 @@ export const Hero = () => {
       )}
 
       <div className="absolute bottom-8 left-0 right-0 mx-auto w-full flex flex-col items-center justify-center gap-4 z-10">
-        <p className="text-sm text-muted-foreground">Scroll for more</p>
+        <p className="text-sm dark:text-muted-foreground">Scroll for more</p>
         <ChevronDownCircleIcon
           className="h-10 w-10 cursor-pointer text-primary animate-bounce"
           onClick={scrollToNextSection}
         />
       </div>
 
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-background to-transparent via-transparent" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-rose-100 dark:from-background to-transparent dark:via-transparent" />
       <div className="container px-4 md:px-6 z-10">
         <motion.div
           className="grid gap-6 md:grid-cols-2 md:gap-12 items-center"
@@ -101,10 +101,19 @@ export const Hero = () => {
             className="flex flex-col justify-center space-y-4"
             style={{ y: textY }}
           >
-            <motion.div className="space-y-2" variants={itemVariants}>
+            <motion.div
+              className="space-y-2"
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
+            >
               <motion.h1
                 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-center md:text-start"
                 variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.3 }}
               >
                 {["Discover", "the", "Perfect", "Product", "for", "You"].map(
                   (word, index) => (
@@ -120,8 +129,11 @@ export const Hero = () => {
                 )}
               </motion.h1>
               <motion.p
-                className="max-w-[600px] text-muted-foreground md:text-xl text-center md:text-start"
+                className="max-w-[600px] dark:text-muted-foreground  md:text-xl text-center md:text-start"
                 variants={itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, amount: 0.3 }}
               >
                 Browse our curated collection of high-quality products and find
                 the one that fits your needs.
@@ -130,6 +142,9 @@ export const Hero = () => {
             <motion.div
               className="flex flex-col gap-2 sm:flex-row"
               variants={itemVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.3 }}
             >
               <Button
                 asChild
